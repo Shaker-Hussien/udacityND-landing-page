@@ -48,7 +48,9 @@ function getNavLinkForSection(sectionDataNavValue){
 */
 function setClass(className, ...elements){
     for(let element of elements){
-        element.classList.add(className)
+        if(element) {
+            element.classList.add(className);
+        }
     }
 }
 
@@ -60,7 +62,9 @@ function setClass(className, ...elements){
 */
 function removeClass(className, ...elements){
     for(let element of elements){
-        element.classList.remove(className)
+        if(element) {
+            element.classList.remove(className);
+        }
     }
 }
 
@@ -101,17 +105,13 @@ navbarList.appendChild(fragmnet);
 // Add class 'active' to section when near top of viewport
 
 function observeSectionInViewPort(){
-
-
     const Observer= new IntersectionObserver( entries =>{
-
         let navlink = getNavLinkForSection(entries[0].target.getAttribute('data-nav'));  
 
         if(entries[0].isIntersecting){
-            setClass("active" ,  entries[0].target , navlink )
-        }
-        else{
-            removeClass("active" ,  entries[0].target , navlink )
+            setClass("active" ,  entries[0].target , navlink );
+        }else{
+            removeClass("active" ,  entries[0].target , navlink );
         }
         
     } , { threshold: [1.0] } )
@@ -125,7 +125,7 @@ function observeSectionInViewPort(){
 /*==========================================================================*/
 
 // Scroll to anchor ID using scrollTO event
-function ScrollOnNavItemClick(){
+function scrollOnNavItemClick(){
     document.querySelectorAll('.menu__link').forEach(item => {
         item.addEventListener('click', event => {
             event.preventDefault();
@@ -146,7 +146,7 @@ function ScrollOnNavItemClick(){
 buildDynamicNavBar()
 
 // Scroll to section on link click
-ScrollOnNavItemClick()
+scrollOnNavItemClick()
 
 // Set sections and navlink as active
 observeSectionInViewPort()
